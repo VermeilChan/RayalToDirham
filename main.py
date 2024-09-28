@@ -17,7 +17,7 @@ class ConverterApp(MDApp):
 
         self.input_riyals = MDTextField(
             MDTextFieldLeadingIcon(icon="bank"),
-            MDTextFieldHintText(text="Hint text",),
+            MDTextFieldHintText(text="Riyal",),
             MDTextFieldTrailingIcon(icon="currency-usd",),
             mode="outlined",
             size_hint_x=None,
