@@ -1,66 +1,39 @@
-from kivymd.app import MDApp
-from kivy.core.window import Window
-from kivymd.uix.label import MDLabel
-from kivy.animation import Animation
-from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.textfield import MDTextField
-from kivymd.uix.button import MDButton, MDButtonIcon, MDButtonText
-from kivymd.uix.textfield import MDTextFieldLeadingIcon, MDTextFieldHintText, MDTextFieldTrailingIcon
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
 
-Window.clearcolor = (0.1, 0.1, 0.1, 1)
-
-class ConverterApp(MDApp):
+class RiyaltoDirham(App):
     def build(self):
-        self.theme_cls.theme_style = "Dark"
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
-        layout = MDBoxLayout(orientation='vertical', padding=20, spacing=20)
+        self.label = Label(text="Enter amount in SAR", font_size=24)
+        layout.add_widget(self.label)
 
-        self.input_riyals = MDTextField(
-            MDTextFieldLeadingIcon(icon="bank"),
-            MDTextFieldHintText(text="Riyal",),
-            MDTextFieldTrailingIcon(icon="currency-usd",),
-            mode="outlined",
-            size_hint_x=None,
-            width="240dp",
-            pos_hint={"center_x": 0.5, "center_y": 0.5},
-            hint_text="Enter amount in Riyals",
-            halign="center",
-        )
+        self.input_sar = TextInput(hint_text="Enter Saudi Riyals (SAR)", multiline=False, input_type='number', font_size=20)
+        layout.add_widget(self.input_sar)
 
-        self.result_label = MDLabel(
-            text="Converted amount in Dirhams: 0",
-            font_size=30,
-            halign="center",
-            text_color=(0.8, 0.8, 0.8, 1)
-        )
-
-        convert_button = MDButton(
-            MDButtonIcon(icon="bank-transfer",),
-            MDButtonText(
-            text="Convert",),
-            pos_hint={"center_x": 0.5, "center_y": 0.5},
-            on_press=self.convert
-        )
-
-        layout.add_widget(self.input_riyals)
-        layout.add_widget(self.result_label)
+        convert_button = Button(text="Convert to MAD", size_hint=(1, 0.5), font_size=20)
+        convert_button.bind(on_press=self.convert_currency)
         layout.add_widget(convert_button)
+
+        self.result_label = Label(text="", font_size=24)
+        layout.add_widget(self.result_label)
 
         return layout
 
-    def convert(self, *_):
+    def convert_currency(self, _):
         try:
-            riyals = float(self.input_riyals.text)
-            dirhams = riyals / 20
-            self.result_label.text = f"Converted amount in Dirhams: {dirhams:.2f}"
-            self.animate_result()
-        except ValueError:
-            self.result_label.text = "Please enter a valid number."
+            sar_amount = float(self.input_sar.text)
 
-    def animate_result(self):
-        anim = Animation(text_color=(1, 1, 0, 1), duration=0.2)
-        anim += Animation(text_color=(0.8, 0.8, 0.8, 1), duration=0.2)
-        anim.start(self.result_label)
+            conversion_rate = 1 / 20
+
+            mad_amount = sar_amount * conversion_rate
+
+            self.result_label.text = f"{sar_amount} SAR = {mad_amount:.2f} MAD"
+        except ValueError:
+            self.result_label.text = "Please enter a valid number!"
 
 if __name__ == "__main__":
-    ConverterApp().run()
+    RiyaltoDirham().run()
