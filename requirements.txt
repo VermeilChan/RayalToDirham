@@ -1,3 +1,4 @@
 kivy
+buildozer
 # Kivymb (for some reason they didnt update the pypi package so we download it using gituhb)
 # pip install https://github.com/kivymd/KivyMD/archive/master.zip
