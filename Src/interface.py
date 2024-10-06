@@ -27,13 +27,16 @@ class RiyaltoDirham(App):
         try:
             sar_amount = float(self.input_sar.text)
 
+            if sar_amount < 0:
+                            raise ValueError("Nice try. Now give me the damn number.")
+
             conversion_rate = 1 / 20
 
             mad_amount = sar_amount * conversion_rate
 
             self.result_label.text = f"{sar_amount} SAR = {mad_amount:.2f} MAD"
         except ValueError:
-            self.result_label.text = "Please enter a valid number!"
+            self.result_label.text = "Lil bro I'm asking for you numbers lol."
 
 if __name__ == "__main__":
     RiyaltoDirham().run()
