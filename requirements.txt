@@ -1,4 +1,7 @@
 kivy
 buildozer
-# Kivymb (for some reason they didnt update the pypi package so we download it using gituhb)
-# pip install https://github.com/kivymd/KivyMD/archive/master.zip
+# Cython
+# Cython==0.29.37
+Cython==0.29.33
+setuptools
+wheel
